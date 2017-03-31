@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router';
 
-export default class Base extends Component{
+export default class AddTodo extends Component{
   constructor(props){
     super(props);
 
@@ -10,12 +11,12 @@ export default class Base extends Component{
     // {} jsx is NOT HTML it's js
     return (
       <div>
-        <h1>Cottonheaded Ninny Muggins</h1>
-         {this.props.children}
+        <Link to="/">Back to List</Link>
+        <p>Add to dod items here</p>
       </div>
     )
   }
 
 }
 
-Base.proTypes = {}
+AddTodo.proTypes = {}

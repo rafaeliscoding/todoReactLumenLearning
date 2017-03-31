@@ -8,9 +8,11 @@ export default class Base extends Component{
 
   render(){
     // {} jsx is NOT HTML it's js
+    //this props children renders child COMPONENTS
     return (
       <div>
         <h1>Cottonheaded Ninny Muggins</h1>
+
          {this.props.children}
       </div>
     )

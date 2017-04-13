@@ -1,21 +1,28 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 
-import {TodoItem, TodoList} from './todos/todos.jsx'
+import {TodoItem, TodoList} from './todos/todos.jsx';
+
+import TodoActions from '../actions/todos.actions.js';
+import TodoStore from '../stores/todos.stores.js';
+
 
 export default class IndexComponent extends Component{
   constructor(props){
     super(props);
     this.state = {
-      todos: [
-        {_id: 1, title: "To Do item", description: "This is a todo description", done: false},
-        {_id: 2, title: "Another Todo Item", description: "This is a really really really really really really really really really really really really really really really really really long description", done: false}
-      ]
+      todos: []
     }
+    //bind your custom functions!!!!!!!
+    this.setTodos =this.setTodos.bind(this);
 
   }
   componentWillMount(){
-
+    //when we mount listen for changes in setDos, which is hooked up to
+    //the store LISTEN COMES FROM ALT--observable
+    TodoStore.listen(this.setTodos);
+    //call loadActions
+    TodoActions.loadActions();
   }
 
   render(){
@@ -25,7 +32,8 @@ export default class IndexComponent extends Component{
     return (
       <div>
         <Link to="add_todo">
-          Add Todo
+          New Route
+          <button onClick={(e)=>TodoActions.createTodo()}>New Todo</button>
         </Link>
         <TodoList>
           {this.state.todos.map((item, index)=>{
@@ -38,7 +46,16 @@ export default class IndexComponent extends Component{
   }
 
   componentWillUnmount(){
+    //like
+    TodoStore.unlisten(this.setTodos);
 
+  }
+  //must bind this in the constructor
+  setTodos(TodoStore){
+    //links state to todo stores
+    this.setState({
+      todos: TodoStore.todos
+    })
   }
 
 }
